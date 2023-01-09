@@ -1,0 +1,40 @@
+{
+    "name": "tingo-gmbh/eloquent-traceable",
+    "description": "Store traceable log items in your local database using Eloquent.",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Tingo\\Traceable\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Tingo\\Traceable\\TraceableServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "Tingo GmbH",
+            "email": "development@tingo.ch"
+        }
+    ],
+    "scripts": {
+        "test": [
+            "vendor/bin/phpunit"
+        ]
+    },
+    "require": {
+        "php": ">=8.1"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.5",
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tingo\\Traceable\\Tests\\": "tests"
+        }
+    }
+}
