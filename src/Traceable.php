@@ -4,6 +4,8 @@ namespace Tingo\Traceable;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Tingo\Traceable\Models\Trace;
 
 trait Traceable
@@ -34,5 +36,24 @@ trait Traceable
             'creator_email' => $creator->getCreatorEmail(),
             'creator_name' => $creator->getCreatorName(),
         ]);
+    }
+
+    /**
+     * Get string in case model has changed.
+     *
+     * @return string
+     */
+    public function getModelChangesDescription(): string
+    {
+        $filteredChanges = array_filter($this->getChanges(), function ($value, $key) {
+            return !in_array($key, ['updated_at']);
+        }, ARRAY_FILTER_USE_BOTH);
+
+        if (count($filteredChanges) === 0) {
+            return __('No changes');
+        }
+
+        $mappedChanges = Arr::map($filteredChanges, fn($value, $key) => $key . '=' . $value);
+        return Str::limit(__('Changes') . ': ' . Arr::join($mappedChanges, ', '), 255);
     }
 }
